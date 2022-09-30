@@ -7,7 +7,7 @@ using Random = UnityEngine.Random;
 public class Simulator : MonoBehaviour
 {
 
-    public static Action<string,string,DateTime> OnNewPlayer; //Name, Country and date
+    public static Action<string,string,DateTime> OnNewPlayer; //Name, Country and creation date
     public static Action<DateTime> OnNewSession;
     public static Action<DateTime> OnEndSession;
     public static Action<int, DateTime> OnBuyItem; //Item id and date
@@ -19,7 +19,7 @@ public class Simulator : MonoBehaviour
     public float BuyProbability = 0.1f;
 
 
-    private int _nPlayers;
+    public int _nPlayers;
 
     private List<string> Countries;
 
@@ -29,6 +29,7 @@ public class Simulator : MonoBehaviour
     #region Subscribe
     private void OnEnable()
     {
+        Debug.Log("Enabled");
         CallbackEvents.OnAddPlayerCallback += OnPlayerAdded;
         CallbackEvents.OnNewSessionCallback += OnNewSessionAdded;
         CallbackEvents.OnEndSessionCallback += OnEndSessionAdded;
@@ -37,6 +38,7 @@ public class Simulator : MonoBehaviour
 
     private void OnDisable()
     {
+        Debug.Log("Disabled");
         CallbackEvents.OnAddPlayerCallback -= OnPlayerAdded;
         CallbackEvents.OnNewSessionCallback -= OnNewSessionAdded;
         CallbackEvents.OnEndSessionCallback -= OnEndSessionAdded;
@@ -46,13 +48,14 @@ public class Simulator : MonoBehaviour
 
     void Start()
     {
+        Debug.Log("Start");
         Countries = new List<string>();
         int nCountries = Random.Range(1, 10);
 
-        string[] coutryNames = System.Enum.GetNames(typeof(AllCountries));
+        string[] countryNames = System.Enum.GetNames(typeof(AllCountries));
         for (int i = 0; i < nCountries; i++)
         {
-            int rdm = Random.Range(0, coutryNames.Length);
+            int rdm = Random.Range(0, countryNames.Length);
             Countries.Add(((AllCountries)rdm).ToString());
         }
         MakeOnePlayer();
@@ -62,6 +65,7 @@ public class Simulator : MonoBehaviour
 
     void MakeOnePlayer()
     {
+        Debug.Log("MakeOnePlayer()");
         _nPlayers++;
         if (_nPlayers > MaxPlayers)
         {
@@ -88,12 +92,14 @@ public class Simulator : MonoBehaviour
 
     void AddNewSession()
     {
+        Debug.Log("Add Session");
         DateTime dateTime = _currentDate;
         OnNewSession?.Invoke(dateTime);
     }
 
     void EndSession()
     {
+        Debug.Log("End Session");
         _currentDate = _currentDate.Add(GetSessionLength());
         DateTime dateTime = _currentDate;
         OnEndSession?.Invoke(dateTime);
@@ -101,6 +107,7 @@ public class Simulator : MonoBehaviour
 
     void TryBuy()
     {
+        Debug.Log("Try Buy");
         _currentDate = _currentDate.Add(GetSessionLength());
         if (UserBuys())
             OnBuyItem?.Invoke(GetItem(),_currentDate);
@@ -110,6 +117,7 @@ public class Simulator : MonoBehaviour
 
     private bool UserBuys()
     {
+        Debug.Log("User buys");
         return Random.value < BuyProbability;
     }
 
@@ -140,10 +148,10 @@ public class Simulator : MonoBehaviour
         int day = Random.Range(1, numOfDays + 1);
 
         int hour = Random.Range(0, 24);
-        int minut = Random.Range(0, 60);
+        int minute = Random.Range(0, 60);
         int second = Random.Range(0, 60);
 
-        return new DateTime(year, month, day, hour, minut, second);
+        return new DateTime(year, month, day, hour, minute, second);
 
     }
 
