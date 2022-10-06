@@ -20,9 +20,21 @@ public class Analyser : MonoBehaviour
     {
         Debug.Log("New Player Event: " + name + " " + country + " " + dateTime);
         PlayerData newPlayerData = new PlayerData(name, country, dateTime);
-        Debug.Log(newPlayerData.GetUrl());
-        
+
+        //Debug.Log(newPlayerData.GetUrl());
+
+        SendToPHP(newPlayerData);
     }
+
+    IEnumerator SendToPHP(PlayerData newPlayerData) //need to make insert.php take this data. It is already properly serialized
+    {
+        using (WWW www = new WWW(newPlayerData.GetUrl()))
+        {
+            yield return www;
+            Debug.Log(www);
+        }
+    }
+
 
     private void OnNewSession(DateTime obj)
     {
