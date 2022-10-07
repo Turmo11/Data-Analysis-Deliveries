@@ -10,7 +10,7 @@ public class PlayerData : MonoBehaviour
     private string p_country;
     private string p_creationTime;
     private string baseUrl = "citmalumnes.upc.es/paufl1";
-    private string phpurl = "/insertplayer.php/";
+    private string phpurl = "/insertplayer.php";
     private string url;
 
     public PlayerData (string name, string country, DateTime creationTime)
@@ -26,6 +26,6 @@ public class PlayerData : MonoBehaviour
 
     public string GetUrl()
     {
-        return url;
+        return url;  
     }
 }
