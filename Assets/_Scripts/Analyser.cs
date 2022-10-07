@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Text.RegularExpressions;
 
 public class Analyser : MonoBehaviour
 {
@@ -29,9 +30,15 @@ public class Analyser : MonoBehaviour
     {
         WWW www = new WWW(newPlayerData.GetUrl());
         
-            Debug.Log(www);
-            yield return www;
-        
+           
+        yield return www;
+
+        Debug.Log(www.text);
+
+        string numbersOnly = Regex.Replace(www.text, "[^0-9]", "");
+
+        CallbackEvents.OnAddPlayerCallback.Invoke(uint.Parse(numbersOnly));
+        Debug.Log("");
     }
 
 
