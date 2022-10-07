@@ -22,16 +22,16 @@ public class Analyser : MonoBehaviour
         PlayerData newPlayerData = new PlayerData(name, country, dateTime);
 
         Debug.Log(newPlayerData.GetUrl());
-        SendToPHP(newPlayerData);
+        StartCoroutine(SendToPHP(newPlayerData));
     }
 
     IEnumerator SendToPHP(PlayerData newPlayerData) //need to make insert.php take this data. It is already properly serialized
     {
-        using (WWW www = new WWW(newPlayerData.GetUrl()))
-        {
+        WWW www = new WWW(newPlayerData.GetUrl());
+        
             Debug.Log(www);
             yield return www;
-        }
+        
     }
 
 
