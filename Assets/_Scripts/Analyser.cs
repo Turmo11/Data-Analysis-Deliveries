@@ -7,6 +7,7 @@ using System.Text.RegularExpressions;
 public class Analyser : MonoBehaviour
 {
     private string current_playerID;
+    private string current_sessionID;
     // Start is called before the first frame update
     private void OnEnable() 
     {
@@ -60,16 +61,36 @@ public class Analyser : MonoBehaviour
 
         Debug.Log(www.text);
 
-        string userID = Regex.Replace(www.text, "[^0-9]", "");
+        current_sessionID = Regex.Replace(www.text, "[^0-9]", "");
 
-        CallbackEvents.OnNewSessionCallback.Invoke(uint.Parse(userID));
-        //Debug.Log(userID);
+        CallbackEvents.OnNewSessionCallback.Invoke(uint.Parse(current_sessionID));
+        Debug.Log(current_sessionID);
     }
 
     private void OnEndSession(DateTime obj)
     {
-        Debug.Log("New SessionEnd Event");
+        EndSessionData endSessionData = new EndSessionData(current_sessionID, obj);
+
+        Debug.Log(endSessionData.GetUrl());
+        
+        StartCoroutine(SendToPHP(current_sessionID, endSessionData));
     }
+
+    IEnumerator SendToPHP(string sessionID, EndSessionData endSessionData) //need to make insert.php take this data. It is already properly serialized
+    {
+        WWW www = new WWW(endSessionData.GetUrl());
+        
+           
+        yield return www;
+
+        Debug.Log(www.text);
+
+        string idk = Regex.Replace(www.text, "[^0-9]", "");
+
+        CallbackEvents.OnNewSessionCallback.Invoke(uint.Parse(idk));
+        Debug.Log(idk);
+    }
+
 
     private void OnBuyItem(int arg1, DateTime arg2)
     {
