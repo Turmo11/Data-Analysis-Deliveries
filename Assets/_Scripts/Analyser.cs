@@ -87,13 +87,28 @@ public class Analyser : MonoBehaviour
 
         string idk = Regex.Replace(www.text, "[^0-9]", "");
 
-        CallbackEvents.OnNewSessionCallback.Invoke(uint.Parse(idk));
-        Debug.Log(idk);
+        CallbackEvents.OnEndSessionCallback.Invoke(uint.Parse(idk));
     }
 
 
-    private void OnBuyItem(int arg1, DateTime arg2)
+    private void OnBuyItem(int itemID, DateTime purchaseTime)
     {
-        Debug.Log("New Item Event");
+        TransactionData transactionData = new TransactionData(itemID, current_sessionID, purchaseTime);
+
+        Debug.Log(transactionData.GetUrl());
+        
+        StartCoroutine(SendToPHP(transactionData));
+    }
+
+    IEnumerator SendToPHP(TransactionData transactionData) //need to make insert.php take this data. It is already properly serialized
+    {
+        WWW www = new WWW(transactionData.GetUrl());
+        
+           
+        yield return www;
+
+        Debug.Log(www.text);
+
+        CallbackEvents.OnItemBuyCallback.Invoke();
     }
 }
