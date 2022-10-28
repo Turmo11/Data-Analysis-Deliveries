@@ -16,7 +16,7 @@ public class Simulator : MonoBehaviour
 
     public int MaxPlayers=100;
     public float ReplayChance => _currentDate.Month < 6 ? 0.7f: 0.95f;
-    public float BuyProbability = 0.0f;
+    public float BuyProbability = 0.1f;
 
 
     public int _nPlayers;
