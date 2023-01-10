@@ -90,7 +90,7 @@ public class HeatmapManager : MonoBehaviour
     {
         foreach (Vector3 position in positions)
         {
-            GameObject heatmapPoint = Instantiate(heatmapPointPrefab, new Vector3(position.x, position.y, position.z), Quaternion.identity, transform);
+            GameObject heatmapPoint = Instantiate(heatmapPointPrefab, new Vector3(position.x, 20, position.z), Quaternion.identity, transform);
             allCubes.Add(heatmapPoint);
         }
     }
