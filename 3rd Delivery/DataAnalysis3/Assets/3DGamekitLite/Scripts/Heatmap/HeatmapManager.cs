@@ -24,6 +24,7 @@ public class HeatmapManager : MonoBehaviour
     [SerializeField] HeatmapType type;
 
     private EventHandler ev;
+    public Camera cam;
 
     public List<GameObject> allCubes;
     public float searchRadius = 2.0f;
@@ -38,13 +39,18 @@ public class HeatmapManager : MonoBehaviour
     private float deathMax = 0;
     public float max = 0;
     CubeCollision cube;
+    public bool ortographic;
 
     
 
     void Start()
     {
+        DestroyCurrentHeatmap();
         ev = FindObjectOfType<EventHandler>();
-        type = HeatmapType.Path;
+        max = pathMax;
+        GenerateHeatmap(ev.pathPositionList);
+        ortographic = false;
+        cam.ortographic = ortographic;
     }
 
     void OptionSelected()
