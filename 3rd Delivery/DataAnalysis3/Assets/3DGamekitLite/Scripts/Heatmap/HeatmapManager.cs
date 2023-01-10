@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using System;
+using UnityEditor;
+
 //using UnityEngine.Networking;
 #if UNITY_EDITOR
 using UnityEditor;
@@ -25,16 +27,19 @@ public class HeatmapManager : MonoBehaviour
 
     public List<GameObject> allCubes;
     public float searchRadius = 2.0f;
+    public float maxSearchRadius = 10.0f;
     public GameObject heatmapPointPrefab;
     public Gradient gradient;
     Color startColor = Color.green;
     Color endColor = Color.red;
-    public float pathMax = 0;
-    public float jumpMax = 0;
-    public float hitMax = 0;
-    public float deathMax = 0;
+    private float pathMax = 0;
+    private float jumpMax = 0;
+    private float hitMax = 0;
+    private float deathMax = 0;
     public float max = 0;
     CubeCollision cube;
+
+    
 
     void Start()
     {
@@ -115,6 +120,11 @@ public class HeatmapManager : MonoBehaviour
             }
 
 
+        }
+
+        if(max == 0)
+        {
+            max = 1;
         }
 
         ColorCubes();

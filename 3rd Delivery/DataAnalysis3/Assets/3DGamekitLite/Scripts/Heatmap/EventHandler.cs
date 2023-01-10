@@ -71,6 +71,7 @@ public class EventHandler : MonoBehaviour
             jumpPositionList.Add(jumpDataInt[i]);
         }
     }
+
     IEnumerator GetHitData()
     {
         WWW www = new WWW("https://citmalumnes.upc.es/~guillemtg1/importhit.php");
@@ -96,6 +97,7 @@ public class EventHandler : MonoBehaviour
             hitPositionList.Add(hitDataInt[i]);
         }
     }
+    
     IEnumerator GetDeathData()
     {
         WWW www = new WWW("https://citmalumnes.upc.es/~guillemtg1/importdeath.php");
@@ -205,6 +207,7 @@ public class EventHandler : MonoBehaviour
     {
         WWW www = new WWW(newDeath.GetUrl());
         yield return www;
+        Debug.Log(www.text);
     }
 }
 

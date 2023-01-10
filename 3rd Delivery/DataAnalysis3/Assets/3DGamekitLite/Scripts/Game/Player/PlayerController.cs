@@ -575,6 +575,7 @@ namespace Gamekit3D
         // This is usually called by a state machine behaviour on the animator controller but can be called from anywhere.
         public void Respawn()
         {
+            ev.DataMessage("Death");
             StartCoroutine(RespawnRoutine());
         }
 
@@ -646,7 +647,6 @@ namespace Gamekit3D
                     {
                         Damageable.DamageMessage damageData = (Damageable.DamageMessage)data;
                         Die(damageData);
-                        ev.DataMessage("Death");
                     }
                     break;
             }
