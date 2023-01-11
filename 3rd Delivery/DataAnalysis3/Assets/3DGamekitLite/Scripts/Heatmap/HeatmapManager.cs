@@ -50,7 +50,7 @@ public class HeatmapManager : MonoBehaviour
         max = pathMax;
         GenerateHeatmap(ev.pathPositionList);
         ortographic = false;
-        cam.ortographic = ortographic;
+        cam.orthographic = ortographic;
     }
 
     void OptionSelected()
@@ -144,6 +144,7 @@ public class HeatmapManager : MonoBehaviour
             float percentage = (script.numCubes / max);
             Color color = gradient.Evaluate(percentage);
             script.GetComponent<Renderer>().material.color = color;
+            script.transform.localScale = new Vector3(1f,1f,1f);
         }
     }
 }
