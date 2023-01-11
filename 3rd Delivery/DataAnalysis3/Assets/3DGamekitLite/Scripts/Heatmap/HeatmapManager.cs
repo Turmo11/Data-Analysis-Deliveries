@@ -49,7 +49,7 @@ public class HeatmapManager : MonoBehaviour
         ev = FindObjectOfType<EventHandler>();
         max = pathMax;
         GenerateHeatmap(ev.pathPositionList);
-        ortographic = false;
+        ortographic = true;
         cam.orthographic = ortographic;
     }
 
@@ -100,7 +100,6 @@ public class HeatmapManager : MonoBehaviour
             allCubes.Add(heatmapPoint);
         }
     }
-
     void DestroyCurrentHeatmap()
     {
         if (allCubes.Count > 0)
